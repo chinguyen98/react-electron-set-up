@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "main": "./electron/main.js",
+  "main": "public/electron.js",
   "author": {
     "email": "dacchi8498@gmail.com",
     "name": "dacchi"
@@ -12,10 +12,12 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "cross-env": "^7.0.3",
     "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "sqlite3": "^5.0.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -23,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "pack": "electron-builder --dir",
     "dist": "npm run build && electron-builder"
   },
@@ -41,12 +43,21 @@
     },
     "files": [
       "./build/**/*",
-      "./electron/main.js"
+      "./public/electron.js"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "build"
     },
-    "extends": null
+    "extends": null,
+    "extraResources": [
+      {
+        "from": "./db/",
+        "to": "db/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   },
   "eslintConfig": {
     "extends": [

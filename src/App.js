@@ -1,24 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  const handleClick = () => {
+    window.api.quitApp();
+  }
+
+  const handleGetProducts = async () => {
+    const data = await window.api.getProducts();
+    setProducts(data);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        {
+          products.length !== 0 && products.map(item => (
+            <h1>{item.name}</h1>
+          ))
+        }
+        <button
+          onClick={handleClick}
         >
-          Learn React
-        </a>
+          Quit App
+          </button>
+        <button
+          onClick={handleGetProducts}
+        >
+          Get Products
+        </button>
       </header>
-    </div>
+    </div >
   );
 }
 
