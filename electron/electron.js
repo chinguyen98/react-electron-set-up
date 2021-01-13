@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 
@@ -13,7 +13,7 @@ function createWindow() {
       contextIsolation: true,
       preload: isDev
         ? path.join(app.getAppPath(), 'electron/preload.js')
-        : path.join(app.getAppPath(), 'electron/preload.js')
+        : path.join(app.getAppPath(), 'electron/preload.js'),
     },
   });
 
@@ -35,12 +35,12 @@ require('./main-process/index');
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 });
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createWindow();
   }
 });

@@ -1,21 +1,14 @@
 const { ipcMain } = require('electron');
-const db = require('../db');
+const { getAllProducts } = require('../services/products');
 
 module.exports = ipcMain.handle('get-products', (e, arg) => {
   return new Promise((resolve, reject) => {
     try {
-      db.serialize(() => {
-        db.all('select * from products', (err, row) => {
-          if (err)
-            throw err;
-          else {
-            console.log(row)
-            resolve(row)
-          }
-        })
-      })
+      getAllProducts()
+        .then(products => resolve(products))
+        .catch(err => { throw err });
     } catch (err) {
       reject(err);
     }
-  })
-})
+  });
+});
